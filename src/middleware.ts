@@ -22,9 +22,13 @@ async function isAuthenticated(req: NextRequest) {
 
   return (
     username === process.env.ADMIN_USERNAME &&
-    isValidPassword(password, process.env.HASHED_ADMIN_PASSWORD as string)
+    (await isValidPassword(
+      password,
+      process.env.HASHED_ADMIN_PASSWORD as string
+    ))
   );
 }
+
 export const config = {
   matcher: "/admin/:path*",
 };

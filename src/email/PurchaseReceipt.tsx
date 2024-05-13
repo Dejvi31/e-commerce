@@ -1,11 +1,11 @@
 import {
-  Html,
-  Head,
   Body,
-  Tailwind,
-  Preview,
   Container,
+  Head,
   Heading,
+  Html,
+  Preview,
+  Tailwind,
 } from "@react-email/components";
 import { OrderInformation } from "./components/OrderInformation";
 
@@ -15,20 +15,21 @@ type PurchaseReceiptEmailProps = {
     imagePath: string;
     description: string;
   };
-  order: { id: string; createdAt: Date; priceInCents: number };
+  order: { id: string; createdAt: Date; pricePaidInCents: number };
   downloadVerificationId: string;
 };
 
 PurchaseReceiptEmail.PreviewProps = {
   product: {
-    name: "Product Name",
-    imagePath: "/products/7b5ab0b4-e464-42f4-9aa3-008b26d670ce-fotoCv.jpg",
-    description: "desc",
+    name: "Product name",
+    description: "Some description",
+    imagePath:
+      "/products/5aba7442-e4a5-4d2e-bfa7-5bd358cdad64-02 - What Is Next.js.jpg",
   },
   order: {
     id: crypto.randomUUID(),
     createdAt: new Date(),
-    priceInCents: 10000,
+    pricePaidInCents: 10000,
   },
   downloadVerificationId: crypto.randomUUID(),
 } satisfies PurchaseReceiptEmailProps;

@@ -1,8 +1,8 @@
 import db from "@/db/db";
-import PurchaseReceiptEmail from "@/email/PurchaseReceipt";
 import { NextRequest, NextResponse } from "next/server";
-import { Resend } from "resend";
 import Stripe from "stripe";
+import { Resend } from "resend";
+import PurchaseReceiptEmail from "@/email/PurchaseReceipt";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 const resend = new Resend(process.env.RESEND_API_KEY as string);
@@ -18,17 +18,16 @@ export async function POST(req: NextRequest) {
     const charge = event.data.object;
     const productId = charge.metadata.productId;
     const email = charge.billing_details.email;
-    const priceInCents = charge.amount;
+    const pricePaidInCents = charge.amount;
 
     const product = await db.product.findUnique({ where: { id: productId } });
-
     if (product == null || email == null) {
       return new NextResponse("Bad Request", { status: 400 });
     }
 
     const userFields = {
       email,
-      orders: { create: { productId, priceInCents } },
+      orders: { create: { productId, pricePaidInCents } },
     };
     const {
       orders: [order],
@@ -58,7 +57,7 @@ export async function POST(req: NextRequest) {
         />
       ),
     });
-
-    return new NextResponse();
   }
+
+  return new NextResponse();
 }

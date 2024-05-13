@@ -1,20 +1,20 @@
 import { formatCurrency } from "@/lib/formatters";
 import {
-  Section,
-  Row,
-  Column,
-  Text,
-  Img,
   Button,
+  Column,
+  Img,
+  Row,
+  Section,
+  Text,
 } from "@react-email/components";
 
 type OrderInformationProps = {
-  order: { id: string; createdAt: Date; priceInCents: number };
+  order: { id: string; createdAt: Date; pricePaidInCents: number };
   product: { imagePath: string; name: string; description: string };
   downloadVerificationId: string;
 };
 
-const dateFormater = new Intl.DateTimeFormat("en", { dateStyle: "medium" });
+const dateFormatter = new Intl.DateTimeFormat("en", { dateStyle: "medium" });
 
 export function OrderInformation({
   order,
@@ -36,7 +36,7 @@ export function OrderInformation({
               Purchased On
             </Text>
             <Text className="mt-0 mr-4">
-              {dateFormater.format(order.createdAt)}
+              {dateFormatter.format(order.createdAt)}
             </Text>
           </Column>
           <Column>
@@ -44,16 +44,16 @@ export function OrderInformation({
               Price Paid
             </Text>
             <Text className="mt-0 mr-4">
-              {formatCurrency(order.priceInCents / 100)}
+              {formatCurrency(order.pricePaidInCents / 100)}
             </Text>
           </Column>
         </Row>
       </Section>
       <Section className="border border-solid border-gray-500 rounded-lg p-4 md:p-6 my-4">
         <Img
-          src={`${process.env.NEXT_PUBLIC_SERVER_URL}${product.imagePath}`}
-          alt={product.name}
           width="100%"
+          alt={product.name}
+          src={`${process.env.NEXT_PUBLIC_SERVER_URL}${product.imagePath}`}
         />
         <Row className="mt-8">
           <Column className="align-bottom">

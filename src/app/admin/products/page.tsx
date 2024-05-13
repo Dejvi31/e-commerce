@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import PageHeader from "../_components/PageHeader";
+import { PageHeader } from "../_components/PageHeader";
 import Link from "next/link";
 import {
   Table,
@@ -47,12 +47,10 @@ async function ProductsTable() {
       isAvailableForPurchase: true,
       _count: { select: { orders: true } },
     },
-    orderBy: {
-      name: "asc",
-    },
+    orderBy: { name: "asc" },
   });
 
-  if (products.length === 0) return <p>No Products Found</p>;
+  if (products.length === 0) return <p>No products found</p>;
 
   return (
     <Table>
@@ -75,13 +73,13 @@ async function ProductsTable() {
             <TableCell>
               {product.isAvailableForPurchase ? (
                 <>
-                  <CheckCircle2 />
                   <span className="sr-only">Available</span>
+                  <CheckCircle2 />
                 </>
               ) : (
                 <>
-                  <XCircle className="stroke-destructive" />
                   <span className="sr-only">Unavailable</span>
+                  <XCircle className="stroke-destructive" />
                 </>
               )}
             </TableCell>
@@ -93,31 +91,28 @@ async function ProductsTable() {
                 <DropdownMenuTrigger>
                   <MoreVertical />
                   <span className="sr-only">Actions</span>
-                  <DropdownMenuContent>
-                    <DropdownMenuItem asChild>
-                      <a
-                        download
-                        href={`/admin/products/${product.id}/download`}
-                      >
-                        Download
-                      </a>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem asChild>
-                      <Link href={`/admin/products/${product.id}/edit`}>
-                        Edit
-                      </Link>
-                    </DropdownMenuItem>
-                    <ActiveToggleDropdownItem
-                      id={product.id}
-                      isAvailableForPurchase={product.isAvailableForPurchase}
-                    />
-                    <DropdownMenuSeparator />
-                    <DeleteDropdownItem
-                      id={product.id}
-                      disabled={product._count.orders > 0}
-                    />
-                  </DropdownMenuContent>
                 </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuItem asChild>
+                    <a download href={`/admin/products/${product.id}/download`}>
+                      Download
+                    </a>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link href={`/admin/products/${product.id}/edit`}>
+                      Edit
+                    </Link>
+                  </DropdownMenuItem>
+                  <ActiveToggleDropdownItem
+                    id={product.id}
+                    isAvailableForPurchase={product.isAvailableForPurchase}
+                  />
+                  <DropdownMenuSeparator />
+                  <DeleteDropdownItem
+                    id={product.id}
+                    disabled={product._count.orders > 0}
+                  />
+                </DropdownMenuContent>
               </DropdownMenu>
             </TableCell>
           </TableRow>

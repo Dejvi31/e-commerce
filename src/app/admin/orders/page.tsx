@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/table";
 import db from "@/db/db";
 import { formatCurrency } from "@/lib/formatters";
+import { PageHeader } from "../_components/PageHeader";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,13 +17,12 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { MoreVertical } from "lucide-react";
 import { DeleteDropDownItem } from "./_components/OrderActions";
-import PageHeader from "../_components/PageHeader";
 
 function getOrders() {
   return db.order.findMany({
     select: {
       id: true,
-      priceInCents: true,
+      pricePaidInCents: true,
       product: { select: { name: true } },
       user: { select: { email: true } },
     },
@@ -61,7 +61,9 @@ async function OrdersTable() {
           <TableRow key={order.id}>
             <TableCell>{order.product.name}</TableCell>
             <TableCell>{order.user.email}</TableCell>
-            <TableCell>{formatCurrency(order.priceInCents / 100)}</TableCell>
+            <TableCell>
+              {formatCurrency(order.pricePaidInCents / 100)}
+            </TableCell>
             <TableCell className="text-center">
               <DropdownMenu>
                 <DropdownMenuTrigger>

@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/table";
 import db from "@/db/db";
 import { formatCurrency, formatNumber } from "@/lib/formatters";
-
+import { PageHeader } from "../_components/PageHeader";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,14 +16,13 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { MoreVertical } from "lucide-react";
 import { DeleteDropDownItem } from "./_components/UserActions";
-import PageHeader from "../_components/PageHeader";
 
 function getUsers() {
   return db.user.findMany({
     select: {
       id: true,
       email: true,
-      orders: { select: { priceInCents: true } },
+      orders: { select: { pricePaidInCents: true } },
     },
     orderBy: { createdAt: "desc" },
   });
@@ -62,7 +61,8 @@ async function UsersTable() {
             <TableCell>{formatNumber(user.orders.length)}</TableCell>
             <TableCell>
               {formatCurrency(
-                user.orders.reduce((sum, o) => o.priceInCents + sum, 0) / 100
+                user.orders.reduce((sum, o) => o.pricePaidInCents + sum, 0) /
+                  100
               )}
             </TableCell>
             <TableCell className="text-center">

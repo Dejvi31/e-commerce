@@ -21,7 +21,7 @@ export async function GET(
   return new NextResponse(file, {
     headers: {
       "Content-Disposition": `attachment; filename="${product.name}.${extension}"`,
-      "Content-length": size.toString(),
+      "Content-Length": size.toString(),
     },
   });
 }

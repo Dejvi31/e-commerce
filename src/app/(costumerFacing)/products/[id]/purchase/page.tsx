@@ -22,6 +22,7 @@ export default async function PurchasePage({
   if (paymentIntent.client_secret == null) {
     throw Error("Stripe failed to create payment intent");
   }
+
   return (
     <CheckoutForm
       product={product}

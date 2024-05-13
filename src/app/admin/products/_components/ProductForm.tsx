@@ -11,7 +11,7 @@ import { useFormState, useFormStatus } from "react-dom";
 import { Product } from "@prisma/client";
 import Image from "next/image";
 
-export default function ProductForm({ product }: { product?: Product | null }) {
+export function ProductForm({ product }: { product?: Product | null }) {
   const [error, action] = useFormState(
     product == null ? addProduct : updateProduct.bind(null, product.id),
     {}
@@ -90,9 +90,10 @@ export default function ProductForm({ product }: { product?: Product | null }) {
 
 function SubmitButton() {
   const { pending } = useFormStatus();
+
   return (
     <Button type="submit" disabled={pending}>
-      {pending ? "Saving" : "Save"}
+      {pending ? "Saving..." : "Save"}
     </Button>
   );
 }

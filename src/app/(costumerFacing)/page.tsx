@@ -9,7 +9,6 @@ import { Suspense } from "react";
 
 const getMostPopularProducts = cache(
   () => {
-    //   await wait(1000);
     return db.product.findMany({
       where: { isAvailableForPurchase: true },
       orderBy: { orders: { _count: "desc" } },
@@ -21,17 +20,12 @@ const getMostPopularProducts = cache(
 );
 
 const getNewestProducts = cache(() => {
-  //   await wait(2000);
   return db.product.findMany({
     where: { isAvailableForPurchase: true },
     orderBy: { createdAt: "desc" },
     take: 6,
   });
 }, ["/", "getNewestProducts"]);
-
-// function wait(duration: number) {
-//   return new Promise((resolve) => setTimeout(resolve, duration));
-// }
 
 export default function HomePage() {
   return (
@@ -50,7 +44,7 @@ type ProductGridSectionProps = {
   productsFetcher: () => Promise<Product[]>;
 };
 
-async function ProductGridSection({
+function ProductGridSection({
   productsFetcher,
   title,
 }: ProductGridSectionProps) {

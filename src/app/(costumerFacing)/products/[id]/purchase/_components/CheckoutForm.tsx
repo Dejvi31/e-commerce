@@ -107,7 +107,7 @@ function Form({
         if (error.type === "card_error" || error.type === "validation_error") {
           setErrorMessage(error.message);
         } else {
-          setErrorMessage("An unknown error has ocurred");
+          setErrorMessage("An unknown error occurred");
         }
       })
       .finally(() => setIsLoading(false));
@@ -118,7 +118,6 @@ function Form({
       <Card>
         <CardHeader>
           <CardTitle>Checkout</CardTitle>
-
           {errorMessage && (
             <CardDescription className="text-destructive">
               {errorMessage}
